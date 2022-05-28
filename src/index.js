@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
 import Ucitaj from "./components/Ucitaj.js";
 import Dodaj from "./components/Dodaj.js"
+import Edit from "./components/Edit.js"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -18,6 +19,7 @@ root.render(
           <Route path="/" element={<App />} >
           <Route path="pocetna" element={<Ucitaj />} />
           <Route path="dodaj" element={<Dodaj />} />
+          <Route path="/Edit/:EditId" element={<Edit />} />
           <Route path="/" element={<Navigate to="/pocetna" />} />
           </Route>
         </Routes>

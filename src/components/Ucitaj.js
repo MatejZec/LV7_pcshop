@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useState, useEffect} from 'react';
+import { Outlet, Link } from "react-router-dom";
 const readURL = "http://localhost/ArtikliJSON/read.php";
 function Ucitaj()
 {
@@ -24,9 +25,32 @@ function Ucitaj()
         }
     }
 
+    async function deleteConfirm(id)
+    {
+        try 
+        {
+            if(window.confirm("Are you sure?"))
+            { 
+            const readUrl = "http://localhost/ArtikliJSON/delete.php"
+            axios({
+                method: "post",url: readUrl,data: {"Id":id,"queryType":"Obrisi"},headers: { "Content-Type": "multipart/form-data" },})
+                .then(function (response) {console.log(response);})
+                .catch(function (response) {console.log(response);});
+                setArtikli([]);
+                getArtikli();
+            }
+                /*setArtikli([]);
+                getArtikli();*/
+        } 
+        catch (error) {
+            
+        }
+    }
+
     
     return (
         <>
+            
             <table className="table table-striped">
             <thead>
                 <tr>
@@ -38,7 +62,7 @@ function Ucitaj()
                     <th scope="col">Kolicina</th>
                 </tr>    
             </thead> 
-            <tbody>
+            <tbody id="tablica">
                 {artikli.map((artikl) => {
 
                     return(
@@ -49,6 +73,8 @@ function Ucitaj()
                         <td>{artikl.Model}</td>
                         <td>{artikl.Cijena}</td>
                         <td>{artikl.Kolicina}</td>
+                        <td><button className="btn btn-outline-danger" onClick={() => deleteConfirm(artikl.Id)}>Delete</button></td>
+                        <td><Link to={`/Edit/${artikl.Id}`} className="btn btn-outline-secondary">Edit</Link></td>
                         </tr>
                     );
                     
